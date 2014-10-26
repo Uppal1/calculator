@@ -8,6 +8,14 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="bundler (v1.7.3, ruby-1.9.3-p545) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="erubis (v2.7.0, ruby-1.9.3-p545) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="hooks (v0.4.0, ruby-1.9.3-p545) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="i18n (v0.6.11, ruby-1.9.3-p545) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rack (v1.5.2, ruby-1.9.3-p545) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rack-test (v0.6.2, ruby-1.9.3-p545) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="thor (v0.19.1, ruby-1.9.3-p545) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="tilt (v1.4.1, ruby-1.9.3-p545) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="uber (v0.0.9, ruby-1.9.3-p545) [gem]" level="application" />
   </component>
 </module>
 
