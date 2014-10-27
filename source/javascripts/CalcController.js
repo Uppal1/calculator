@@ -93,8 +93,8 @@ CalcController.prototype.init = function(callbackObj){
 //
 //    //Memory
 //    document.getElementById("btn-mem-set").addEventListener('mouseup', clear);
-//    document.getElementById("btn-mem-add").addEventListener('mouseup', clear);
-//    document.getElementById("btn-mem-sub").addEventListener('mouseup', clear);
+   document.getElementById("btn-mem-add").addEventListener('mouseup',function() {self.addClicked()} );
+   document.getElementById("btn-mem-sub").addEventListener('mouseup',function() {self.subtractClicked()} );
 //    document.getElementById("btn-mem-recall").addEventListener('mouseup', clear);
 //    document.getElementById("btm-mem-clear").addEventListener('mouseup', clear);
 };
