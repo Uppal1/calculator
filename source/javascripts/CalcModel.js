@@ -106,7 +106,7 @@ CalcModel.prototype.evaluate = function () {
             this.opDivide();
             break;
         case 'M+':
-            this.opAdd();
+            this.mAdd();
         default:
             break;
     }
