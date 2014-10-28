@@ -119,6 +119,8 @@ function mathOperation() {
         case 'btn-div':
             break;
         case 'btn-mult':
+            break;
+        case 'mem-add':
     }
 }
 
