@@ -120,7 +120,7 @@ function mathOperation() {
             break;
         case 'btn-mult':
             break;
-        case 'mem-add':
+        case 'btn-mem-add':
     }
 }
 
