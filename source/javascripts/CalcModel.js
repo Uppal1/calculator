@@ -71,6 +71,10 @@ CalcModel.prototype.opAdd = function(){
     console.log('ADD ' + this.mainReg.value + ' + ' + this.tempReg.value);
     this.mainReg.value = this.mainReg.value + this.tempReg.value;
 };
+CalcModel.prototype.mAdd = function(){
+    console.log('M+' + this.mainReg.value + ' + ' + this.tempReg.value);
+    this.memReg.value = this.mainReg.value + this.tempReg.value;
+};
 
 CalcModel.prototype.opSubtract = function(){
     console.log('SUBTRACT ' + this.mainReg.value + ' - ' + this.tempReg.value);
@@ -101,6 +105,8 @@ CalcModel.prototype.evaluate = function () {
         case 'divide':
             this.opDivide();
             break;
+        case 'M+':
+            this.opAdd();
         default:
             break;
     }
