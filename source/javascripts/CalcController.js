@@ -7,20 +7,18 @@ var CalcController = function() {
         this.model.addInteger(number);
         this.refreshView();
     };
-
+    this.intClicked = function(number) {
+        this.model.addmemInteger(number);
+        this.refreshView();
+    };
     this.addClicked = function() {
         this.model.setOp('add');
         this.refreshView();
     }
-    this.mClicked=function(){
-        this.model.setOp('mem-add');
-        this.refreshView();
 
-
-    }
 
     this.subtractClicked = function() {
-        this.model.setOp('subtract');
+        this.model.setOp('mem-subtract');
         this.refreshView();
     }
 
@@ -32,6 +30,18 @@ var CalcController = function() {
     this.divideClicked = function() {
         this.model.setOp('divide');
         this.refreshView();
+    }
+
+    this.percentClicked = function() {
+	//this.model.setOp('percent');
+	this.model.opPercent();
+	this.refreshView();
+    }
+
+    this.sqrtClicked = function() {
+	this.model.opSqrt();
+	this.refreshView();
+
     }
 
     this.equalsClicked = function() {
@@ -49,14 +59,53 @@ var CalcController = function() {
         this.refreshView();
     }
 
+    this.decimalClicked = function() {
+        this.model.setDecimal();
+        this.refreshView();
+    }
+
+    //memory buttons 
+    this.memSetClicked= function(){
+        this.model.memSet();
+         this.refreshView();
+    }
+
+    this.memAddClicked= function(){
+        this.model.memAdd();
+        this.refreshView();
+    }
+
+    this.memSubClicked= function(){
+        this.model.memSub();
+        this.refreshView();
+    }
+    this.memRecallClicked= function(){
+        this.model.memRecall();
+        this.refreshView();
+    }
+
+    this.memClearClicked= function(){
+        this.model.memClear();
+        this.refreshView();
+    }
+
+
+
     this.refreshView = function() {
-        this.view.updateMainDisplay(this.model.curReg.value);
+        if (this.model.decimalDisplay && (String(this.model.curReg.value).length < this.model.MAX_WIDTH - 1)) {
+            this.view.updateMainDisplay(this.model.curReg.value + ".");
+        } else {
+            this.view.updateMainDisplay(this.model.curReg.value);
+        }
+
         this.view.updateMemSetDisplay('');
         this.view.updateOpSetDisplay(this.model.currentOperation);
+        document.getElementById("debug").innerHTML = 'curReg: ' + this.model.curReg.name + '<br />' + 'mainReg: ' + this.model.mainReg.value + '<br />' + 'tempReg: ' + this.model.tempReg.value + '<br />' + 'currentOp: ' + this.model.currentOperation + '<br />' + 'firstNumEntered: ' + this.model.firstNumEntered + '<br />' + 'decimalMode: ' + this.model.decimalMode + '<br />' + 'decimalDisplay: ' + this.model.decimalDisplay;
     }
+
 };
 
-CalcController.prototype.init = function(callbackObj){
+CalcController.prototype.init = function(){
     console.log('Controller init');
     var self = this;
 
@@ -85,7 +134,7 @@ CalcController.prototype.init = function(callbackObj){
     document.getElementById("btn-clearentry").addEventListener('mouseup', function() {self.clearEntryClicked()});
 //
 //    //Misc
-//    document.getElementById("btn-decimal").addEventListener('mouseup', clear);
+    document.getElementById("btn-decimal").addEventListener('mouseup', function() {self.decimalClicked()});
 //    document.getElementById("btn-neg").addEventListener('mouseup', clear);
     document.getElementById("btn-equals").addEventListener('mouseup', function() {self.equalsClicked()});
 //
@@ -94,29 +143,13 @@ CalcController.prototype.init = function(callbackObj){
     document.getElementById("btn-sub").addEventListener('mouseup', function() {self.subtractClicked()});
     document.getElementById("btn-mult").addEventListener('mouseup', function() {self.multiplyClicked()});
     document.getElementById("btn-div").addEventListener('mouseup', function() {self.divideClicked()});
-//    document.getElementById("btn-sqrt").addEventListener('mouseup', mathOperation);
-//    document.getElementById("btn-percent").addEventListener('mouseup', mathOperation);
+    document.getElementById("btn-sqrt").addEventListener('mouseup', function(){self.sqrtClicked()});
+    document.getElementById("btn-percent").addEventListener('mouseup', function(){self.percentClicked()});
 //
 //    //Memory
-//    document.getElementById("btn-mem-set").addEventListener('mouseup', clear);
-   document.getElementById("btn-mem-add").addEventListener('mouseup',function() {self.mClicked()} );
-  // document.getElementById("btn-mem-sub").addEventListener('mouseup',function() {self.subtractClicked()} );
-//    document.getElementById("btn-mem-recall").addEventListener('mouseup', clear);
-//    document.getElementById("btm-mem-clear").addEventListener('mouseup', clear);
+    document.getElementById("btn-mem-set").addEventListener('mouseup', function(){self.memSetClicked()});
+    document.getElementById("btn-mem-add").addEventListener('mouseup',function(){self.memAddClicked()} );
+    document.getElementById("btn-mem-sub").addEventListener('mouseup', function(){self.memSubClicked()});
+    document.getElementById("btn-mem-recall").addEventListener('mouseup', function(){self.memRecallClicked()});
+    document.getElementById("btm-mem-clear").addEventListener('mouseup', function(){self.memClearClicked()});
 };
-
-CalcController.prototype.intEntry = function(event) {
-    this.model.addInteger(number);
-    this.view.updateMainDisplay(this.model.curReg.value);
-};
-
-CalcController.prototype.clearEntry = function() {
-    this.model.clearEntry();
-    this.view.updateMainDisplay(this.model.curReg.value);
-};
-
-CalcController.prototype.clearAll = function() {
-    this.m
-};
-
-

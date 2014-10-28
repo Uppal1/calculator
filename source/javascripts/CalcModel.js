@@ -6,7 +6,7 @@ var CalcModel = function() {
     //Registers declared as objects so they can be aliased
     this.mainReg = {name: 'main', value: 0};
     this.tempReg = {name: 'temp', value: 0};
-    this.memReg = {name: 'mem', value: 0};
+    this.memReg={name:'mem', value: 0};
 
     //curReg aliases both mainReg and tempReg based on if we're in the
     //middle of a math operation or not.
@@ -14,61 +14,124 @@ var CalcModel = function() {
 
     //Holds the operation which is in progress, otherwise null
     this.currentOperation = null;
+
+    // Initial display is always 0
+    this.decimalMode = false;
+    this.decimalDisplay = false;
+    this.decimalCounter = null;
 };
 
-CalcModel.prototype.addInteger = function(number){
+CalcModel.prototype.setDecimal = function() {
+    this.decimalCounter = 1;
+    this.decimalDisplay = true;
+    this.decimalMode = true;
+}
 
-    if (this.currentOperation != null) {
-        this.firstNumEntered = true;
+CalcModel.prototype.resetDecimal = function() {
+    this.decimalCounter = null;
+    this.decimalDisplay = false;
+    this.decimalMode = false;
+}
+
+CalcModel.prototype.addInteger = function(number){
+    //After evaluating the previous operation, begin entering a new number, not changing the returned answer
+    if (this.curReg == this.mainReg && this.firstNumEntered == false && this.currentOperation == null) {
+        this.mainReg.value = 0;
     }
 
+    this.firstNumEntered = true;
+    this.decimalDisplay = false;
+
     //So the user can still see the number they entered before entering an operation
-    if (this.firstNumEntered) {
+    if (this.currentOperation != null) {
         this.curReg = this.tempReg;
     }
 
     //Make sure the number fits on the screen
-    if (String(this.curReg.value).length < this.MAX_WIDTH - 2) {
-        this.curReg.value = (this.curReg.value * 10) + number;
+    if (String(this.curReg.value).length < this.MAX_WIDTH - 1) {
+        if(this.decimalMode) {
+            //alert(number / Math.pow(10, this.decimalCounter));
+            this.curReg.value = this.curReg.value + (number / Math.pow(10, this.decimalCounter));
+            this.decimalCounter++;
+        } else {
+            this.curReg.value = (this.curReg.value * 10) + number;
+        }
     }
 
+    console.log(this.curReg.name + ': ' + this.curReg.value);
+};
+CalcModel.prototype.addmemInteger = function(number){
+    //After evaluating the previous operation, begin entering a new number, not changing the returned answer
+    if (this.curReg == this.memReg && this.firstNumEntered == false && this.currentOperation == null) {
+        this.memReg.value = 0;
+    }
 
+    this.firstNumEntered = true;
+    this.decimalDisplay = false;
 
+    //So the user can still see the number they entered before entering an operation
+    if (this.currentOperation != null) {
+        this.curReg = this.tempReg;
+    }
+
+    //Make sure the number fits on the screen
+    if (String(this.curReg.value).length < this.MAX_WIDTH - 1) {
+        if(this.decimalMode) {
+            //alert(number / Math.pow(10, this.decimalCounter));
+            this.curReg.value = this.curReg.value + (number / Math.pow(10, this.decimalCounter));
+            this.decimalCounter++;
+        } else {
+            this.curReg.value = (this.curReg.value * 10) + number;
+        }
+    }
 
     console.log(this.curReg.name + ': ' + this.curReg.value);
 };
 
 CalcModel.prototype.clearAll = function () {
-    console.log('CLEAR ALL');
     this.mainReg.value = 0;
     this.tempReg.value = 0;
     this.curReg = this.mainReg;
-}
+    this.currentOperation = null;
+    this.resetDecimal();
+};
 
 CalcModel.prototype.clearEntry = function () {
-    console.log('CLEAR ENTRY');
     this.curReg.value = 0;
-}
+    this.resetDecimal();
+};
+
+//memory methods
+CalcModel.prototype.memClear = function () {
+    this.curReg.value = 0;
+    this.resetDecimal();
+};
+
+CalcModel.prototype.memRecall = function () {
+    this.mainReg.value = this.curReg.value;
+    this.resetDecimal();
+};
+
+
 
 //Sets the current operation of the calculator
 CalcModel.prototype.setOp = function(op) {
     //If another operation is not currently active, set operation
     if (this.currentOperation == null) {
         this.currentOperation = op;
-        console.log('Set op to ' + op);
     }
     else if (this.firstNumEntered === true){
-        console.log('Already have an op in progress');
-        var result = this.evaluate();
+        //If an operation is already active, evaluate it then set the operation
+        this.evaluate();
         this.curReg = this.mainReg;
         this.currentOperation = op;
-        return result;
     }
 
-}
+    this.firstNumEntered = false;
+};
 
 CalcModel.prototype.opAdd = function(){
-    console.log('ADD ' + this.mainReg.value + ' + ' + this.tempReg.value);
+    //Add the value of tempReg to mainReg
     this.mainReg.value = this.mainReg.value + this.tempReg.value;
 };
 CalcModel.prototype.mAdd = function(){
@@ -77,18 +140,38 @@ CalcModel.prototype.mAdd = function(){
 };
 
 CalcModel.prototype.opSubtract = function(){
-    console.log('SUBTRACT ' + this.mainReg.value + ' - ' + this.tempReg.value);
+    //Subtract the value of tempReg from mainReg
     this.mainReg.value = this.mainReg.value - this.tempReg.value;
 };
 
 CalcModel.prototype.opMultiply = function(){
-    console.log('MULTIPLY ' + this.mainReg.value + ' * ' + this.tempReg.value);
+    //Multiply mainReg by tempReg
     this.mainReg.value = this.mainReg.value * this.tempReg.value;
 };
 
 CalcModel.prototype.opDivide = function(){
-    console.log('DIVIDE ' + this.mainReg.value + ' / ' + this.tempReg.value);
+    //Divide mainReg by tempReg
     this.mainReg.value = this.mainReg.value / this.tempReg.value;
+};
+
+CalcModel.prototype.opPercent = function(){
+    //Divide curReg by 100
+    if(this.curReg== this.mainReg){
+    	this.mainReg.value = this.mainReg.value / 100;
+    }else{
+	this.tempReg.value=this.tempReg.value/100;
+    }
+    
+};
+
+CalcModel.prototype.opSqrt = function(){
+    //Take sqrt of curReg
+    if(this.curReg== this.mainReg){
+    	this.mainReg.value = Math.sqrt(this.mainReg.value);
+    }else{
+	this.tempReg.value= Math.sqrt(this.tempReg.value);
+    }
+    
 };
 
 CalcModel.prototype.evaluate = function () {
@@ -111,9 +194,11 @@ CalcModel.prototype.evaluate = function () {
             break;
     }
 
-    this.tempReg = 0;
-    this.curReg = this.mainReg;
+    this.tempReg.value = 0;
+    this.curReg = this.mainReg;    //Result is stored in mainReg
     this.firstNumEntered = false;
     this.currentOperation = null;
+
+    this.resetDecimal();
 
 };

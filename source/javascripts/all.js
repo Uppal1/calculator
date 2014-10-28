@@ -61,8 +61,8 @@ function init() {
 
     //Memory
     document.getElementById("btn-mem-set").addEventListener('mouseup', clear);
-    document.getElementById("btn-mem-add").addEventListener('mouseup', mathOperation);
-    document.getElementById("btn-mem-sub").addEventListener('mouseup', clear);
+    document.getElementById("btn-mem-add").addEventListener('mouseup',mathOperation);
+    document.getElementById("btn-mem-sub").addEventListener('mouseup', mathOperation);
     document.getElementById("btn-mem-recall").addEventListener('mouseup', clear);
     document.getElementById("btm-mem-clear").addEventListener('mouseup', clear);
 }
@@ -121,6 +121,8 @@ function mathOperation() {
         case 'btn-mult':
             break;
         case 'btn-mem-add':
+            break;
+        case 'btn-mem-sub':
     }
 }
 
