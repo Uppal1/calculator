@@ -12,6 +12,12 @@ var CalcController = function() {
         this.model.setOp('add');
         this.refreshView();
     }
+    this.mClicked=function(){
+        this.model.setOp('mem-add');
+        this.refreshView();
+
+
+    }
 
     this.subtractClicked = function() {
         this.model.setOp('subtract');
@@ -93,8 +99,8 @@ CalcController.prototype.init = function(callbackObj){
 //
 //    //Memory
 //    document.getElementById("btn-mem-set").addEventListener('mouseup', clear);
-   document.getElementById("btn-mem-add").addEventListener('mouseup',function() {self.addClicked()} );
-   document.getElementById("btn-mem-sub").addEventListener('mouseup',function() {self.subtractClicked()} );
+   document.getElementById("btn-mem-add").addEventListener('mouseup',function() {self.mClicked()} );
+  // document.getElementById("btn-mem-sub").addEventListener('mouseup',function() {self.subtractClicked()} );
 //    document.getElementById("btn-mem-recall").addEventListener('mouseup', clear);
 //    document.getElementById("btm-mem-clear").addEventListener('mouseup', clear);
 };
