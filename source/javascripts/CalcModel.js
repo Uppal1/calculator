@@ -111,7 +111,7 @@ CalcModel.prototype.opAdd = function(){
 };
 CalcModel.prototype.opmAdd = function(){
     this.memReg.value = this.mainReg.value+this.tempReg.value;
-    this.curReg.value=this.memReg.value;
+    this.mainReg.value=this.tempReg.value;
 };
 //CalcModel.prototype.opmSubtract = function(){
   //  this.memReg.value = this.mainReg.value-this.tempReg.value;
