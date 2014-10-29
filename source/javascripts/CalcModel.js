@@ -6,7 +6,7 @@ var CalcModel = function() {
     //Registers declared as objects so they can be aliased
     this.mainReg = {name: 'main', value: 0};
     this.tempReg = {name: 'temp', value: 0};
-//    this.memReg={name: 'memReg',value:0};
+    this.memReg={name: 'memReg',value:0};
 
     //curReg aliases both mainReg and tempReg based on if we're in the
     //middle of a math operation or not.
@@ -111,10 +111,11 @@ CalcModel.prototype.opAdd = function(){
 };
 CalcModel.prototype.opmAdd = function(){
     this.memReg.value = this.mainReg.value+this.tempReg.value;
+    this.mainReg.value=this.memReg.value;
 };
-CalcModel.prototype.opmSubtract = function(){
-    this.memReg.value = this.mainReg.value-this.tempReg.value;
-};
+//CalcModel.prototype.opmSubtract = function(){
+  //  this.memReg.value = this.mainReg.value-this.tempReg.value;
+//};
 CalcModel.prototype.opSubtract = function(){
     //Subtract the value of tempReg from mainReg
     this.mainReg.value = this.mainReg.value - this.tempReg.value;
