@@ -74,7 +74,7 @@ var CalcController = function() {
         this.refreshView();
     }
     this.memRecallClicked= function(){
-        this.model.setOp();
+        this.model.memRecall();
         this.refreshView();
     }
 
@@ -84,7 +84,7 @@ var CalcController = function() {
     }
 
     this.memSetClicked= function(){
-        this.model.Set();
+        this.model.memSet();
         this.refreshView();
     }
 

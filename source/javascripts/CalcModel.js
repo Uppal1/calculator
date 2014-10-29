@@ -82,7 +82,12 @@ CalcModel.prototype.memClear = function () {
 };
 
 CalcModel.prototype.memRecall = function () {
-    mainDisplay.innerHTML = curReg.value;
+    this.curReg=this.memReg;
+    this.resetDecimal();
+};
+
+CalcModel.prototype.memSet = function () {
+    this.curReg=this.memReg;
     this.resetDecimal();
 };
 
@@ -111,7 +116,8 @@ CalcModel.prototype.opAdd = function(){
 };
 CalcModel.prototype.opmAdd = function(){
     this.memReg.value = this.mainReg.value+this.tempReg.value;
-  };
+    this.mainReg.value=this.memReg.value;
+};
 CalcModel.prototype.opmSubtract = function(){
     this.memReg.value = this.mainReg.value-this.tempReg.value;
 };

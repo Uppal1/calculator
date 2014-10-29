@@ -57,7 +57,7 @@ function init() {
     document.getElementById("btn-percent").addEventListener('mouseup', mathOperation);
 
     //Memory
-    document.getElementById("btn-mem-set").addEventListener('mouseup',memClear );
+    document.getElementById("btn-mem-set").addEventListener('mouseup',memSet );
     document.getElementById("btn-mem-add").addEventListener('mouseup',mathOperation);
     document.getElementById("btn-mem-sub").addEventListener('mouseup',mathOperation);
     document.getElementById("btn-mem-recall").addEventListener('mouseup', memRecall);
@@ -102,17 +102,14 @@ function memClear() {
 
 function memRecall()
 {
-    mainDisplay.innerHTML = memReg.value;
+    curReg=memReg;
 }
 
 function memSet()
 {
-    mainDisplay.innerHTML = memReg.value;
+    curReg=memReg;
 }
-function memSet()
-{
 
-}
 function mathOperation() {
     //Steps
     //1. Check state - are we already in the middle of another op?
@@ -137,6 +134,8 @@ function mathOperation() {
         case 'btn-mem-add':
             break;
         case 'btn-mem-sub':
+            break;
+            
 
 
 
