@@ -6,7 +6,7 @@ var CalcModel = function() {
     //Registers declared as objects so they can be aliased
     this.mainReg = {name: 'main', value: 0};
     this.tempReg = {name: 'temp', value: 0};
-    this.memReg={name:'mem', value: 0};
+    this.memReg={name: 'memReg',value:0};
 
     //curReg aliases both mainReg and tempReg based on if we're in the
     //middle of a math operation or not.
@@ -60,33 +60,6 @@ CalcModel.prototype.addInteger = function(number){
 
     console.log(this.curReg.name + ': ' + this.curReg.value);
 };
-CalcModel.prototype.addmemInteger = function(number){
-    //After evaluating the previous operation, begin entering a new number, not changing the returned answer
-    if (this.curReg == this.memReg && this.firstNumEntered == false && this.currentOperation == null) {
-        this.memReg.value = 0;
-    }
-
-    this.firstNumEntered = true;
-    this.decimalDisplay = false;
-
-    //So the user can still see the number they entered before entering an operation
-    if (this.currentOperation != null) {
-        this.curReg = this.tempReg;
-    }
-
-    //Make sure the number fits on the screen
-    if (String(this.curReg.value).length < this.MAX_WIDTH - 1) {
-        if(this.decimalMode) {
-            //alert(number / Math.pow(10, this.decimalCounter));
-            this.curReg.value = this.curReg.value + (number / Math.pow(10, this.decimalCounter));
-            this.decimalCounter++;
-        } else {
-            this.curReg.value = (this.curReg.value * 10) + number;
-        }
-    }
-
-    console.log(this.curReg.name + ': ' + this.curReg.value);
-};
 
 CalcModel.prototype.clearAll = function () {
     this.mainReg.value = 0;
@@ -102,15 +75,17 @@ CalcModel.prototype.clearEntry = function () {
 };
 
 //memory methods
+//clears memory
 CalcModel.prototype.memClear = function () {
-    this.curReg.value = 0;
+    this.memReg.value = 0;
     this.resetDecimal();
 };
 
 CalcModel.prototype.memRecall = function () {
-    this.mainReg.value = this.curReg.value;
+    mainDisplay.innerHTML = curReg.value;
     this.resetDecimal();
 };
+
 
 
 
@@ -134,11 +109,12 @@ CalcModel.prototype.opAdd = function(){
     //Add the value of tempReg to mainReg
     this.mainReg.value = this.mainReg.value + this.tempReg.value;
 };
-CalcModel.prototype.mAdd = function(){
-    console.log('M+' + this.memReg.value + ' + ' + this.tempReg.value);
-    this.memReg.value = this.memReg.value + this.tempReg.value;
+CalcModel.prototype.opmAdd = function(){
+    this.memReg.value = this.mainReg.value+this.tempReg.value;
 };
-
+CalcModel.prototype.opmSubtract = function(){
+    this.memReg.value = this.mainReg.value-this.tempReg.value;
+};
 CalcModel.prototype.opSubtract = function(){
     //Subtract the value of tempReg from mainReg
     this.mainReg.value = this.mainReg.value - this.tempReg.value;
@@ -188,8 +164,10 @@ CalcModel.prototype.evaluate = function () {
         case 'divide':
             this.opDivide();
             break;
-        case 'M+':
-            this.mAdd();
+        case 'mem-add':
+            this.opmAdd();
+        case 'mem-sub':
+            this.opmSubtract();
         default:
             break;
     }
@@ -198,7 +176,6 @@ CalcModel.prototype.evaluate = function () {
     this.curReg = this.mainReg;    //Result is stored in mainReg
     this.firstNumEntered = false;
     this.currentOperation = null;
-
     this.resetDecimal();
 
 };

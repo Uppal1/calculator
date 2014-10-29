@@ -10,17 +10,14 @@ function Model(mainVal, tempVal, memVal) {
     this.tempReg = { value: tempVal };
     this.memReg = { value: memVal };
     this.curReg = this.mainReg;
-
     this.firstNumEntered = false;
     this.inOperation = false;
 
 }
-
 function View(mainDisplay, screenWidth) {
     this.mainDisplay = mainDisplay;
     this.screenWidth = screenWidth;
 }
-
 function Controller() {
     // functions to evaluate calculations
     // functions to evaluate "M" buttons (ex. memory recall)
@@ -60,11 +57,11 @@ function init() {
     document.getElementById("btn-percent").addEventListener('mouseup', mathOperation);
 
     //Memory
-    document.getElementById("btn-mem-set").addEventListener('mouseup', clear);
+    document.getElementById("btn-mem-set").addEventListener('mouseup',memClear );
     document.getElementById("btn-mem-add").addEventListener('mouseup',mathOperation);
-    document.getElementById("btn-mem-sub").addEventListener('mouseup', mathOperation);
-    document.getElementById("btn-mem-recall").addEventListener('mouseup', clear);
-    document.getElementById("btm-mem-clear").addEventListener('mouseup', clear);
+    document.getElementById("btn-mem-sub").addEventListener('mouseup',mathOperation);
+    document.getElementById("btn-mem-recall").addEventListener('mouseup', memRecall);
+    document.getElementById("btm-mem-clear").addEventListener('mouseup', memClear);
 }
 
 // <--- End Init --->
@@ -88,7 +85,6 @@ function buttonPressInt() {
 function clear() {
     mainReg.value = 0;
     tempReg.value = 0;
-
     curReg = mainReg;
     refreshDisplay();
 }
@@ -98,7 +94,25 @@ function clearEntry() {
     curReg.value = 0;
     refreshDisplay();
 }
+//clears memory
+function memClear() {
+    memReg.value=0;
+    refreshDisplay();
+}
 
+function memRecall()
+{
+    mainDisplay.innerHTML = memReg.value;
+}
+
+function memSet()
+{
+    mainDisplay.innerHTML = memReg.value;
+}
+function memSet()
+{
+
+}
 function mathOperation() {
     //Steps
     //1. Check state - are we already in the middle of another op?
@@ -123,6 +137,10 @@ function mathOperation() {
         case 'btn-mem-add':
             break;
         case 'btn-mem-sub':
+            break;
+
+
+
     }
 }
 

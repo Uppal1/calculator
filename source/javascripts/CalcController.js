@@ -7,21 +7,15 @@ var CalcController = function() {
         this.model.addInteger(number);
         this.refreshView();
     };
-    this.intClicked = function(number) {
-        this.model.addmemInteger(number);
-        this.refreshView();
-    };
     this.addClicked = function() {
         this.model.setOp('add');
         this.refreshView();
     }
 
-
     this.subtractClicked = function() {
-        this.model.setOp('mem-subtract');
+        this.model.setOp('subtract');
         this.refreshView();
     }
-
     this.multiplyClicked = function() {
         this.model.setOp('multiply');
         this.refreshView();
@@ -66,21 +60,21 @@ var CalcController = function() {
 
     //memory buttons 
     this.memSetClicked= function(){
-        this.model.memSet();
+        this.model.setOp();
          this.refreshView();
     }
 
     this.memAddClicked= function(){
-        this.model.memAdd();
+        this.model.setOp('mem-add');
         this.refreshView();
     }
 
     this.memSubClicked= function(){
-        this.model.memSub();
+        this.model.setOp('mem-sub');
         this.refreshView();
     }
     this.memRecallClicked= function(){
-        this.model.memRecall();
+        this.model.setOp();
         this.refreshView();
     }
 
@@ -88,6 +82,13 @@ var CalcController = function() {
         this.model.memClear();
         this.refreshView();
     }
+
+    this.memSetClicked= function(){
+        this.model.Set();
+        this.refreshView();
+    }
+
+
 
 
 
@@ -100,7 +101,7 @@ var CalcController = function() {
 
         this.view.updateMemSetDisplay('');
         this.view.updateOpSetDisplay(this.model.currentOperation);
-        document.getElementById("debug").innerHTML = 'curReg: ' + this.model.curReg.name + '<br />' + 'mainReg: ' + this.model.mainReg.value + '<br />' + 'tempReg: ' + this.model.tempReg.value + '<br />' + 'currentOp: ' + this.model.currentOperation + '<br />' + 'firstNumEntered: ' + this.model.firstNumEntered + '<br />' + 'decimalMode: ' + this.model.decimalMode + '<br />' + 'decimalDisplay: ' + this.model.decimalDisplay;
+        document.getElementById("debug").innerHTML = 'curReg: ' + this.model.curReg.name + '<br />' + 'mainReg: ' + this.model.mainReg.value + '<br />' + 'tempReg: ' + this.model.tempReg.value + '<br />' + 'currentOp: ' + this.model.currentOperation + '<br />' + 'firstNumEntered: ' + this.model.firstNumEntered + '<br />' + 'decimalMode: ' + this.model.decimalMode + '<br />' + 'decimalDisplay: ' + this.model.decimalDisplay+ '<br />'+'memDisplay: ' +this.model.memReg.value;
     }
 
 };
