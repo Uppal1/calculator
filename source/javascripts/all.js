@@ -137,7 +137,7 @@ function mathOperation() {
         case 'btn-mem-add':
             break;
         case 'btn-mem-sub':
-            break;
+
 
 
 
